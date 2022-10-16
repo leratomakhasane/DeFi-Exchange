@@ -19,48 +19,58 @@ import {
 import { swapTokens, getAmountOfTokensReceivedFromSwap } from "../utils/swap";
 
 export default function Home(){
-  //set to true when transaction is mining and set to false when transaction has been mined
+  //set true when transaction is mining and set false when transaction has been mined
   const [loading, setLoading] = useState(false);
+
   //keep track of tab the user is on
   const [liquidityTab, setLiquidityTab] = useState(true);
   const zero = BigNumber.from(0);
-  /** Variables to keep track of amount */
-  // `ethBalance` keeps track of the amount of Eth held by the user's account
+
+  // keeps track of the amount of Eth held by the user's account
   const [ethBalance, setEtherBalance] = useState(zero);
-  // `reservedCD` keeps track of the Crypto Dev tokens Reserve balance in the Exchange contract
+
+  // keeps track of the Crypto Dev tokens Reserve balance in the Exchange contract
   const [reservedCD, setReservedCD] = useState(zero);
+
   // Keeps track of the ether balance in the contract
   const [etherBalanceContract, setEtherBalanceContract] = useState(zero);
-  // cdBalance is the amount of `CD` tokens help by the users account
+
+  // the amount of `CD` tokens help by the users account
   const [cdBalance, setCDBalance] = useState(zero);
-  // `lpBalance` is the amount of LP tokens held by the users account
+
+  // the amount of LP tokens held by the users account
   const [lpBalance, setLPBalance] = useState(zero);
-  /** Variables to keep track of liquidity to be added or removed */
-  // addEther is the amount of Ether that the user wants to add to the liquidity
+
+  // the amount of Ether that the user wants to add to the liquidity
   const [addEther, setAddEther] = useState(zero);
-  // addCDTokens keeps track of the amount of CD tokens that the user wants to add to the liquidity
-  // in case when there is no initial liquidity and after liquidity gets added it keeps track of the
-  // CD tokens that the user can add given a certain amount of ether
+
+  // addCDTokens keeps track of the amount of CD tokens the user wants to add to the liquidity
   const [addCDTokens, setAddCDTokens] = useState(zero);
-  // removeEther is the amount of `Ether` that would be sent back to the user based on a certain number of `LP` tokens
+
+  // the amount of `Ether` that would be sent back to user based on a certain number of `LP` tokens
   const [removeEther, setRemoveEther] = useState(zero);
-  // removeCD is the amount of `Crypto Dev` tokens that would be sent back to the user based on a certain number of `LP` tokens
+
+  // the amount of `Crypto Dev` tokens that would be sent back to the user based on a certain number of `LP` tokens
   // that he wants to withdraw
   const [removeCD, setRemoveCD] = useState(zero);
+
   // amount of LP tokens that the user wants to remove from liquidity
   const [removeLPTokens, setRemoveLPTokens] = useState("0");
-  /** Variables to keep track of swap functionality */
+
   // Amount that the user wants to swap
   const [swapAmount, setSwapAmount] = useState("");
-  // This keeps track of the number of tokens that the user would receive after a swap completes
-  const [tokenToBeReceivedAfterSwap, settokenToBeReceivedAfterSwap] =
-    useState(zero);
+
+  // keeps track of the number of tokens that the user would receive after a swap completes
+  const [tokenToBeReceivedAfterSwap, settokenToBeReceivedAfterSwap] = useState(zero);
+
   // Keeps track of whether  `Eth` or `Crypto Dev` token is selected. If `Eth` is selected it means that the user
   // wants to swap some `Eth` for some `Crypto Dev` tokens and vice versa if `Eth` is not selected
   const [ethSelected, setEthSelected] = useState(true);
+
   /** Wallet connection */
   // Create a reference to the Web3 Modal (used for connecting to Metamask) which persists as long as the page is open
   const web3ModalRef = useRef();
+  
   // walletConnected keep track of whether the user's wallet is connected or not
   const [walletConnected, setWalletConnected] = useState(false);
 
@@ -83,6 +93,7 @@ export default function Home(){
       const _reservedCD = await getReserveOfCDTokens(provider);
       // Get the ether reserves in the contract
       const _ethBalanceContract = await getEtherBalance(provider, null, true);
+      
       setEtherBalance(_ethBalance);
       setCDBalance(_cdBalance);
       setLPBalance(_lpBalance);
@@ -480,7 +491,7 @@ export default function Home(){
     <div>
       <Head>
         <title>Crypto Devs</title>
-        <meta name="description" content="Whitelist-Dapp" />
+        <meta name="description" content="DeFi Exchange-Dapp" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
